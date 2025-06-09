@@ -1,0 +1,2625 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://virtserver.swaggerhub.com/oasislivestock/CargooDriver/1.0.0'
+info:
+  description: "# \U0001F4E6 Cargoo Driver API Module\r\n<br>\r\n## ✅ Successful Responses\r\n**All successful responses containing a body must be wrapped within a data object or array**\r\n###  Single Object Response:\r\n\r\n```json\r\n{\r\n  \"code\": 200,\r\n  \"message\": \"Operation successful\",\r\n  \"data\": {}\r\n}\r\n```\r\n\r\n### Array Response:\r\n```json\r\n{\r\n  \"code\": 200,\r\n  \"message\": \"Operation successful\",\r\n  \"data\": []\r\n}\r\n```\r\n<br>\r\n## ❌ Error Responses\r\n**All error responses should follow this standardized structure:**\r\n```json\r\n{\r\n\"code\":${error_code},\r\n\"message\": \"descriptive localized error message\",\r\n}\r\n```"
+  version: 1.0.0
+  title: Cargoo Driver API
+  contact:
+    email: you@your-company.com
+    name: ''
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /api/driver/auth/email-login:
+    post:
+      summary: Email Login
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/UserProfile'
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '406':
+          $ref: '#/components/responses/UserNotFoundError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example 1:
+                  value:
+                    code: 0
+                    message: string
+                    data: {}
+      operationId: email-login
+      description: Email Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                email:
+                  type: string
+                  x-stoplight:
+                    id: pclxq1534wcdx
+                password:
+                  type: string
+                  x-stoplight:
+                    id: ri72gs68omu42
+                deviceType:
+                  type: string
+                  x-stoplight:
+                    id: nbypimz1o90q4
+                  nullable: true
+                deviceToken:
+                  type: string
+                  x-stoplight:
+                    id: 5txgwdytsisce
+                  nullable: true
+            examples:
+              Example:
+                value:
+                  email: mobile.developer@oasislivestock.com
+                  password: '12345678'
+                  deviceToken: 3472|akjnasdHGHYdas8u12neuq1
+                  deviceType: ios
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+        - $ref: '#/components/parameters/Device-Id'
+      security: []
+    parameters: []
+  /api/driver/auth/phone-login:
+    post:
+      summary: Phone Login
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/UserProfile'
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '406':
+          $ref: '#/components/responses/UserNotFoundError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example 1:
+                  value:
+                    code: 0
+                    message: string
+                    data: {}
+      operationId: phone-login
+      description: Phone Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                phone:
+                  type: string
+                password:
+                  type: string
+                deviceType:
+                  type: string
+                  nullable: true
+                deviceToken:
+                  type: string
+                  nullable: true
+            examples:
+              phone login:
+                value:
+                  phone: '97156562014'
+                  password: '12345678'
+                  deviceToken: 72346y|KMnfJ3J8jasdjNAHDQHJ34
+                  deviceType: android
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+        - $ref: '#/components/parameters/Device-Id'
+      security: []
+    parameters: []
+  /api/driver/auth/profile:
+    parameters: []
+    get:
+      summary: Profile
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/UserProfile'
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example 1:
+                  value:
+                    code: 406
+                    message: User not found
+                    data: {}
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+      operationId: profile
+      description: User profile info
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/auth/social-login:
+    post:
+      summary: Social Login
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/UserProfile'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example 1:
+                  value:
+                    code: 406
+                    message: User not found
+                    data: {}
+      operationId: social-login
+      description: 'Login using social platforms [Google, Apple]'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - socialId
+              properties:
+                email:
+                  type: string
+                  x-stoplight:
+                    id: adf0uswouv4u3
+                socialId:
+                  type: string
+                  x-stoplight:
+                    id: 22px5kvjvdc3n
+                providerName:
+                  type: string
+                  x-stoplight:
+                    id: zez5rawu87hh3
+                  nullable: true
+                deviceType:
+                  type: string
+                  x-stoplight:
+                    id: 0g58dnyadosnr
+                  nullable: true
+                deviceToken:
+                  type: string
+                  x-stoplight:
+                    id: bnntp1vu8l4sp
+                  nullable: true
+            examples:
+              Example 1:
+                value:
+                  email: mobile.developer@oasis.com
+                  socialId: 001140.1088c0c494a244f4b2c92a886ab3409f.13034
+                  providerName: google
+                  deviceType: android
+                  deviceToken: 5103|Q2y1zpYQedfrdqMyaWwGHrQYhyR1GqTAaMMkkCzs03a00d50
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+        - $ref: '#/components/parameters/Device-Id'
+  /api/driver/auth/logout:
+    get:
+      summary: Logout
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: logout
+      description: Logout user
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/auth/password-reset:
+    post:
+      summary: Reset Password
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: password-reset
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  x-stoplight:
+                    id: 93qon15v0hor9
+            examples:
+              Example 1:
+                value:
+                  password: abc12345
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/auth/otp/send-otp:
+    post:
+      summary: Send OTP
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    code: 429
+                    message: You have exceeded the maximum number of OTP requests. Please try again in 15 minutes
+              examples:
+                Example 1:
+                  value:
+                    code: 429
+                    message: You have exceeded the maximum number of OTP requests. Please try again in 15 minutes
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: send-otp
+      description: Dispatches OTP for the purpose of verifying a new phone number or to reset user password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone
+              properties:
+                phone:
+                  type: string
+                  x-stoplight:
+                    id: g3b1ljx7ifnt0
+            examples:
+              Example 1:
+                value:
+                  phone: '971585412369'
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+        - $ref: '#/components/parameters/Device-Id'
+  /api/driver/auth/otp/verify-otp:
+    post:
+      summary: Verify Otp
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/UserProfile'
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Incorrect OTP:
+                  value:
+                    code: 400
+                    message: The OTP you entered is incorrect
+                    data: {}
+                Expired OTP:
+                  value:
+                    code: 400
+                    message: OTP has expired. Please request a new one.
+                    data: {}
+      operationId: verify-otp
+      description: Verifies OTP.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone
+                - code
+              properties:
+                phone:
+                  type: string
+                  x-stoplight:
+                    id: x9wlgfyd2zlii
+                code:
+                  type: string
+                  description: MD5 hashed value
+            examples:
+              Example 1:
+                value:
+                  phone: '971562547890'
+                  code: 81dc9bdb52d04dc20036dbd8313ed055
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+        - $ref: '#/components/parameters/Device-Id'
+    parameters: []
+  /api/driver/auth/signup:
+    post:
+      summary: Signup
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          description: Shared Response
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    id: 22
+                    name: John Doe
+                    email: mobile.developer@oasislivestock.com
+                    phone: '971562058974'
+                    imageUrl: 'https://xyc.com/image.png'
+                    isPhoneVerified: true
+                    isTermsAccepted: true
+                    isDocumentsApproved: true
+                    isExpressDeliveryActive: false
+                required:
+                  - id
+                  - name
+                  - email
+                  - phone
+                  - imageUrl
+                  - isPhoneVerified
+                  - isTermsAccepted
+                  - isDocumentsApproved
+                  - isExpressDeliveryActive
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  imageUrl:
+                    type: string
+                  isPhoneVerified:
+                    type: boolean
+                  isTermsAccepted:
+                    type: boolean
+                  isDocumentsApproved:
+                    type: boolean
+                  isExpressDeliveryActive:
+                    type: boolean
+              examples:
+                Example 1:
+                  value:
+                    id: 22
+                    name: John Doe
+                    email: mobile.developer@oasislivestock.com
+                    phone: '971562058974'
+                    imageUrl: 'https://xyc.com/image.png'
+                    isPhoneVerified: true
+                    isTermsAccepted: true
+                    isDocumentsApproved: true
+                    isExpressDeliveryActive: false
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Phone required:
+                  value:
+                    code: 400
+                    message: The 'phone' field is required
+                    data: {}
+                Phone already exists:
+                  value:
+                    code: 400
+                    message: An account with this phone number already exists
+                    data: {}
+                Email already exists:
+                  value:
+                    code: 400
+                    message: An account with this email already exists
+                    data: {}
+                Name too short/long:
+                  value:
+                    code: 400
+                    message: Name must be between 2 and 50 characters
+                    data: {}
+                Invalid phone format:
+                  value:
+                    code: 400
+                    message: Please enter a valid phone number
+                    data: {}
+                Invalid email format:
+                  value:
+                    code: 400
+                    message: Please enter a valid email address
+                    data: {}
+      operationId: signup
+      description: Create user account.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - phone
+                - password
+              properties:
+                name:
+                  type: string
+                  x-stoplight:
+                    id: 0lve2htj65hi4
+                email:
+                  type: string
+                  x-stoplight:
+                    id: tra96cmhcwpgx
+                  nullable: true
+                phone:
+                  type: string
+                  x-stoplight:
+                    id: 90l49fk1kunrn
+                password:
+                  type: string
+                  x-stoplight:
+                    id: 1pjxc7y0rjz57
+                deviceType:
+                  type: string
+                  x-stoplight:
+                    id: qp8mlv06ma3lv
+                  nullable: true
+                deviceToken:
+                  type: string
+                  x-stoplight:
+                    id: hiyhi71ehuqf9
+                  nullable: true
+            examples:
+              Example 1:
+                value:
+                  name: Full Name
+                  email: some@one.com
+                  phone: '97152874698'
+                  password: '12345678'
+                  deviceType: android
+                  deviceToken: FCM|asdfasadqwgvsafq3r35r$#@R#r#rdasf
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+        - $ref: '#/components/parameters/Device-Id'
+  /api/driver/delivery/express-toggle:
+    put:
+      summary: Toggle Express Availability
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: express-toggle
+      description: Toggles the availability of express delivery for the driver.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - enableExpressDelivery
+              properties:
+                enableExpressDelivery:
+                  type: boolean
+                  x-stoplight:
+                    id: jki7dnoccgkdn
+            examples:
+              Example 1:
+                value:
+                  enableExpressDelivery: true
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/legal/privacy-policy:
+    get:
+      summary: Privacy Policy
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terms-Condition-and-Privacy-Policy'
+              examples:
+                Example 1:
+                  value:
+                    - id: 63
+                      title: Data Collection
+                      body: 'We collect only necessary information such as name, contact details, and delivery addresses to provide our services.'
+                    - id: 64
+                      title: Data Usage
+                      body: 'Your data is used solely for order processing, tracking, customer support, and service improvements.'
+                    - id: 65
+                      title: Data Sharing
+                      body: 'We do not sell your data. However, we may share it with trusted partners (e.g., delivery personnel) to complete your shipment.'
+      operationId: privacy-policy
+      description: Gets Privacy Policy
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/legal/terms-conditions:
+    get:
+      summary: Terms & Conditions
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Terms-Condition-and-Privacy-Policy'
+              examples:
+                Example 1:
+                  value:
+                    - id: 57
+                      title: Delivery Terms and Conditions
+                      body: Our services follow standard delivery protocols to ensure safe and timely shipping.
+                    - id: 51
+                      title: Eligibility Criteria
+                      body: Customers must provide valid contact and delivery details to use our services.
+                    - id: 50
+                      title: Payment After Delivery
+                      body: Payment can be made upon successful delivery of your package.
+      operationId: terms-conditions
+      description: Gets Terms & Conditions
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+    put:
+      summary: Accept T&C
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: accept-terms-conditions
+      description: "When called, indicates that the driver has accepted the terms and conditions.\r\n\r\nNo request parameters required, user token is passed in the headers."
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/auth/device-token:
+    put:
+      summary: Update Device Token
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: update-device-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - deviceToken
+                - deviceType
+              properties:
+                deviceToken:
+                  type: string
+                  x-stoplight:
+                    id: 9fbpm7zz5lx70
+                deviceType:
+                  type: string
+                  x-stoplight:
+                    id: yjwfbdmittnp2
+            examples:
+              Example 1:
+                value:
+                  deviceToken: jkashduianIYFDH^#THJASDH^@gDUWYu
+                  deviceType: ios
+      description: "Updates server with user's device token.\r\nImportant for sending push notifications."
+      parameters: []
+  /api/driver/countries/list:
+    get:
+      summary: List Countries
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Countries'
+              examples:
+                Example 1:
+                  value:
+                    - id: 0
+                      name: United Arab Emirates
+                      countryCode: '+971'
+                      phoneRegex: '^(+d{1,2}s?)?(?d{3})?[s.-]?d{3}[s.-]?d{4}$'
+                      flagUrl: 'https://cargo.cargooapp.com/uploads/image/countries/20250212T105349185Z755336.png'
+                    - id: 1
+                      name: پاکستان
+                      countryCode: '+92'
+                      phoneRegex: '^(+d{1,2}s?)?(?d{3})?[s.-]?d{3}[s.-]?d{4}$'
+                      flagUrl: 'https://cdn.britannica.com/46/3346-050-DE92F66A/flag-symbolism-Pakistan-design-Islamic.jpg'
+      operationId: countries
+      description: List of supported countries
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/languages/list:
+    get:
+      summary: List Languages
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Language'
+              examples:
+                Example 1:
+                  value:
+                    - id: 1
+                      name: English
+                      locale: en
+                    - id: 2
+                      name: العربية
+                      locale: ar
+      operationId: languages
+      description: List of supported languages
+      security: []
+      parameters: []
+  /api/driver/documents/list:
+    get:
+      summary: List Documents
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+              examples:
+                Example 1:
+                  value:
+                    - id: 103
+                      name: Emirates ID Front Side
+                      imageUrl: 'http://xyz.com/documents/20250424T122842819Z567824.jpg'
+                      status: 1
+                      rejectionReason: null
+                    - id: 104
+                      name: Emirates ID Back Side
+                      imageUrl: 'http://xyz.com/documents/20250424T122842819Z567824.jpg'
+                      status: 2
+                      rejectionReason:
+                        id: 96
+                        title: Rejection Reason Title
+                        body: 'Your emirates ID has expired, please re-upload a valid ID'
+      operationId: documents
+      description: "List of driver's documents with status and rejectionReason\r\nDocument Statuses: [0 PENDING, 1 APPROVED, 2 REJECTED]"
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/documents/details:
+    get:
+      summary: Document
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+              examples:
+                Example 1:
+                  value:
+                    id: 104
+                    name: Emirates ID Back Side
+                    imageUrl: 'http://xyz.com/documents/20250424T122842819Z567824.jpg'
+                    status: 2
+                    rejectionReason:
+                      id: 96
+                      title: Rejection Reason Title
+                      body: 'Your emirates ID has expired, please re-upload a valid ID'
+      operationId: document
+      description: "Get Document details by id\r\nDocument Statuses: [0 PENDING, 1 APPROVED, 2 REJECTED]"
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: id
+          description: Document ID
+          required: true
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/documents/upload:
+    post:
+      summary: Upload Driver Document
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '406':
+          description: Not Acceptable
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 422
+                    message: The uploaded file exceeds the maximum allowed size of 1 MB
+                required:
+                  - message
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 422
+                    message: The uploaded file exceeds the maximum allowed size of 1 MB
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 422
+                    message: File type not allowed
+                required:
+                  - message
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 422
+                    message: File type not allowed
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: upload-document
+      description: "Called with image or pdf file, and document ID.\r\nWhen called successfully, document status is reset to [0 PENDING]"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - id
+                - file
+              properties:
+                id:
+                  type: integer
+                  x-stoplight:
+                    id: a38n3icsxnnp5
+                file:
+                  type: string
+                  x-stoplight:
+                    id: 0nch0m6mizbmt
+                  format: byte
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/order/upload-delivery-confirmation:
+    post:
+      summary: Upload Order Delivery Confirmation Image
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: upload-delivery-confirmation
+      description: "Called with image file, and order ID.\r\nCan be called multiple times to upload multiple files for the same order."
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - orderId
+                - file
+              properties:
+                orderId:
+                  type: integer
+                file:
+                  type: string
+                  format: byte
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/address/details:
+    parameters: []
+    get:
+      summary: Address Details
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+              examples:
+                Example 1:
+                  value:
+                    id: 13
+                    title: Someone's Home
+                    country: UAE
+                    city: Abu Dhabi
+                    district: Zone 1
+                    subDistrict: Al Danah
+                    apartment: B-102
+                    building: 'Tiger Tower #6'
+                    phone: '+971568521456'
+                    latitude: 24.45391234
+                    longitude: 54.37731234
+      operationId: address
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: id
+          description: address ID
+          required: true
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/order/express:
+    get:
+      summary: Nearby Express Orders
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+              examples:
+                Example 1:
+                  value:
+                    - id: 123
+                      phone: '+971562014587'
+                      packageCount: 3
+                      addressFrom:
+                        id: 62
+                        title: Home Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+                      addressTo:
+                        id: 223
+                        title: Office Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+                    - id: 124
+                      phone: '+971562014587'
+                      packageCount: 1
+                      addressFrom:
+                        id: 62
+                        title: Home Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+                      addressTo:
+                        id: 223
+                        title: Office Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+      operationId: express-orders
+      description: Lists available Express orders within the driver's proximity
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: lat
+          description: Driver latitude
+          required: true
+        - schema:
+            type: number
+          in: query
+          name: lng
+          description: Driver longitude
+          required: true
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/order/task-orders:
+    get:
+      summary: Orders by Task ID
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Orders'
+              examples:
+                Example 1:
+                  value:
+                    - id: 123
+                      phone: '+971562014587'
+                      packageCount: 3
+                      handoverDriverId: 3
+                      addressFrom:
+                        id: 62
+                        title: Home Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+                      addressTo:
+                        id: 223
+                        title: Office Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+                    - id: 124
+                      phone: '+971562014587'
+                      packageCount: 1
+                      handoverDriverId: 3
+                      addressFrom:
+                        id: 62
+                        title: Home Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+                      addressTo:
+                        id: 223
+                        title: Office Address
+                        latitude: 24.447118729922693
+                        longitude: 54.38278386194854
+      operationId: task-orders
+      description: Lists orders related to a specific driver task
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: taskId
+          required: true
+          description: '"3-99"'
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/order/details:
+    get:
+      summary: Order
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+              examples:
+                Example 1:
+                  value:
+                    id: 123
+                    phone: '+971562014587'
+                    packageCount: 3
+                    handoverDriverId: 70
+                    addressFrom:
+                      id: 62
+                      title: Home Address
+                      latitude: 24.447118729922693
+                      longitude: 54.38278386194854
+                    addressTo:
+                      id: 223
+                      title: Office Address
+                      latitude: 24.447118729922693
+                      longitude: 54.38278386194854
+      operationId: order
+      description: Fetch Order Details by order ID
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: orderId
+          required: true
+          description: '345'
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/delivery/accept-order:
+    post:
+      summary: Accept Order
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '410':
+          description: 'Gone: Order already accepted by another driver'
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    message: This order has already been accepted by another rider.
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    message: This order has already been accepted by another rider.
+        '412':
+          description: 'Precondition Failed: Indicate that the driver already have order in progress (App shows actionable dialog)'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    x-stoplight:
+                      id: vd49p4sawt6cf
+              examples:
+                Example 1:
+                  value:
+                    message: 'You already have an order, go to My Tasks.'
+        '422':
+          $ref: '#/components/responses/Unprocessable-Entity-422'
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+      operationId: accept-order
+      description: Accept order
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+              properties:
+                orderId:
+                  type: number
+                  x-stoplight:
+                    id: f1ix18bwgo3eq
+                  description: Order ID
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/delivery/drivers:
+    get:
+      summary: Drivers by task ID
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                x-examples:
+                  Example 1:
+                    - id: 1
+                      name: Muhammad Ilyas
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 2
+                      name: Zaman Khan
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 3
+                      name: Fakhr Alam
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 4
+                      name: Muhammad Zain
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 5
+                      name: Shakeel ur Rahman
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 6
+                      name: Muhammad Rizwan
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 7
+                      name: Zaman Khan Niazi
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 8
+                      name: Muhammad Bilal
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 9
+                      name: Salar Khan
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 10
+                      name: Arshad Khan
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 11
+                      name: Imran Khan Niazi
+                      image_url: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                items:
+                  type: object
+                  required:
+                    - id
+                    - name
+                    - imageUrl
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    imageUrl:
+                      type: string
+              examples:
+                Example 1:
+                  value:
+                    - id: 1
+                      name: Muhammad Ilyas
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 2
+                      name: Zaman Khan
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 3
+                      name: Fakhr Alam
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 4
+                      name: Muhammad Zain
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 5
+                      name: Shakeel ur Rahman
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 6
+                      name: Muhammad Rizwan
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 7
+                      name: Zaman Khan Niazi
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 8
+                      name: Muhammad Bilal
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 9
+                      name: Salar Khan
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 10
+                      name: Arshad Khan
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    - id: 11
+                      name: Imran Khan Niazi
+                      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+      operationId: task-drivers
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: taskId
+          description: '"6-99"'
+          required: true
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/task/list:
+    get:
+      summary: Task List
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+              examples:
+                Example 1:
+                  value:
+                    - id: 1-99
+                      taskTypeId: 1
+                      orderId: 99
+                      numberOfOrders: 3
+                      address:
+                        id: 8
+                        title: na
+                        latitude: '24.35374323078029'
+                        longitude: '54.81049060821533'
+                      status: 2
+                    - id: 2-99
+                      taskTypeId: 2
+                      orderId: 99
+                      numberOfOrders: 1
+                      address:
+                        id: 8
+                        title: na
+                        latitude: '24.35374323078029'
+                        longitude: '54.81049060821533'
+                      status: 1
+                    - id: 3-99
+                      taskTypeId: 3
+                      orderId: 99
+                      numberOfOrders: 3
+                      address:
+                        id: 9
+                        title: name here
+                        latitude: '24.720394189398235'
+                        longitude: '54.81049060821533'
+                      status: 1
+                    - id: 4-99
+                      taskTypeId: 4
+                      orderId: 99
+                      numberOfOrders: 3
+                      address:
+                        id: 9
+                        title: name here
+                        latitude: '24.720394189398235'
+                        longitude: '54.81049060821533'
+                      requireDeliveryConfirmation: true
+                      status: 1
+                    - id: 5-99
+                      taskTypeId: 5
+                      orderId: 99
+                      numberOfOrders: 3
+                      address:
+                        id: 9
+                        title: name here
+                        latitude: '24.720394189398235'
+                        longitude: '54.81049060821533'
+                      status: 1
+                    - id: 6-99
+                      taskTypeId: 6
+                      orderId: 99
+                      numberOfOrders: 3
+                      address:
+                        id: 9
+                        title: name here
+                        latitude: '24.720394189398235'
+                        longitude: '54.81049060821533'
+                      status: 1
+                    - id: 7-99
+                      taskTypeId: 7
+                      orderId: 99
+                      numberOfOrders: 3
+                      address:
+                        id: 9
+                        title: name here
+                        latitude: '24.720394189398235'
+                        longitude: '54.81049060821533'
+                      status: 1
+                    - id: 8-99
+                      taskTypeId: 8
+                      orderId: 99
+                      numberOfOrders: 5
+                      address:
+                        id: 9
+                        title: name here
+                        latitude: '24.720394189398235'
+                        longitude: '54.81049060821533'
+                      status: 1
+      operationId: task-list
+      description: "List of driver's current tasks sorted in the order they must be completed.\r\nTask status: [1 = PENDING, 2 = STARTED, 3 = FINISHED]\r\nTask Types: \r\n- DRIVE_TO_PICKUP_LOCATION(1)\r\n- COLLECT_ITEMS_FROM_LOCATION(2)\r\n- DRIVE_TO_DROP_OFF_LOCATION(3)\r\n- DELIVER_ITEMS_TO_END_CUSTOMER(4)\r\n- DRIVE_TO_COLLECTION_HUB_DESIGNATION(5)\r\n- HANDOVER_ITEMS_TO_DRIVER(6)\r\n- DRIVE_TO_COLLECTION_HUB_FOR_PICKUP(7)\r\n- COLLECT_ITEMS_FROM_COLLECTION_HUB(8)"
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/task/start:
+    put:
+      summary: Start Task
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: 422
+                    message: You need to finish previous task first
+                required:
+                  - message
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+              examples:
+                Example 1:
+                  value:
+                    code: 422
+                    message: You need to finish previous task first
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    message: You cannot start this task before completing the previous required task.
+                    data: {}
+      operationId: task-start
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - taskId
+              properties:
+                taskId:
+                  type: string
+                  x-stoplight:
+                    id: qp3is9e6jdyz2
+            examples:
+              Example 1:
+                value:
+                  taskId: 3-99
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/task/finish:
+    put:
+      summary: Finish Task
+      tags: []
+      responses:
+        '400':
+          $ref: '#/components/responses/Bad-Request-400'
+        '401':
+          $ref: '#/components/responses/Unauthorized-401'
+        '403':
+          $ref: '#/components/responses/Forbidden-403'
+        '404':
+          $ref: '#/components/responses/Not-Found-404'
+        '409':
+          $ref: '#/components/responses/Conflict-409'
+        '422':
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    code: 422
+                    message: You need to finish previous task
+              examples:
+                Example 1:
+                  value:
+                    code: 422
+                    message: You need to finish previous task first
+        '429':
+          $ref: '#/components/responses/TooManyRequests-429'
+        '500':
+          $ref: '#/components/responses/Internal-Server-Error-500'
+        '503':
+          $ref: '#/components/responses/Service-Unavailable-503'
+        '504':
+          $ref: '#/components/responses/Gateway-Timeout-504'
+        2XX:
+          $ref: '#/components/responses/SuccessResponse'
+        4XX:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  message:
+                    type: string
+                x-examples:
+                  Example 1:
+                    code: 400
+                    message: You can't finish a task before it starts
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    message: You can't finish a task before it starts
+      operationId: task-finish
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - taskId
+              properties:
+                taskId:
+                  type: string
+            examples:
+              Example 1:
+                value:
+                  taskId: 3-99
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+    parameters: []
+  /api/driver/notifications/list:
+    get:
+      summary: Notifications List
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notifications'
+              examples:
+                Example 1:
+                  value:
+                    - id: 11
+                      title: New order notification
+                      message: Accept this order
+                      notificationType: 2
+                      createdAt: '2025-04-13T07:35:49.994Z'
+                    - id: 12
+                      title: New order notification
+                      message: Accept this order
+                      notificationType: 2
+                      createdAt: '2025-04-13T07:35:49.994Z'
+                    - id: 13
+                      title: New order notification
+                      message: Accept this order
+                      notificationType: 2
+                      createdAt: '2025-04-13T07:35:49.994Z'
+                    - id: 14
+                      title: New order notification
+                      message: Accept this order
+                      notificationType: 2
+                      createdAt: '2025-04-13T07:35:49.994Z'
+      operationId: notifications
+      description: A paginated list of driver's in-app notifications.
+      parameters:
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/task/details:
+    get:
+      summary: Task Details
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+              examples:
+                Example 1:
+                  value:
+                    id: 3-78
+                    taskTypeId: 3
+                    status: 1
+                    orderId: 132
+                    numberOfOrders: 1
+                    requireDeliveryConfirmation: false
+                    address:
+                      id: 231
+                      title: Address Title
+                      latitude: 24.565424
+                      longitude: 54.985224
+      operationId: task-details
+      description: Fetch Task Info by Task ID
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: taskId
+          description: '"3-99"'
+          required: true
+        - $ref: '#/components/parameters/Locale'
+  /api/driver/route/compute:
+    post:
+      summary: Compute Route
+      tags: []
+      responses:
+        2XX:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - distanceMeters
+                  - durationSeconds
+                  - encodedPolyline
+                properties:
+                  distanceMeters:
+                    type: integer
+                    x-stoplight:
+                      id: 1fskpla8yd0mi
+                  durationSeconds:
+                    type: integer
+                    x-stoplight:
+                      id: xkx74l0ar72hs
+                  encodedPolyline:
+                    type: string
+                    x-stoplight:
+                      id: nui2tcm75o35l
+              examples:
+                Example 1:
+                  value:
+                    distanceMeters: 30078
+                    durationSeconds: 2565
+                    encodedPolyline: 'snwsCgymkIFRL`EAVCN@rBBlAG\Qf@GF]F[BoB??nAEbC`DCtACEmACaEGmDE{GJULGdBEAcAfBIPGJO~@BTR`@DXGRQJY@c@M]MOCaAUkOY_SYmRR[DYC]OYGGGoBy@{o@GmDNUH]AYEQUYQmHc@s[K}FGyGIkC?cCk@o`@QgIEcCMi@Ii@OqDEc@ZASaTO{LK{FEuIJc@?}NEq@UmBUeAe@mAa@o@iAoAy@s@_Ae@s@YmAUiAOsA?kBFuLp@UDULCDmZl@wLTqAHs^t@oFDcDHqJL_[l@yU^}EDeCHmANkAZq@Ze@XuAzAm@`Ac@`AYbAsAjIUbAaArD{@pCGv@sInVaJ~W}GhSiLz\}CnJmDtJcEzL_KnY{A|D[fAY|AGtAB~Av@`RhAnSCj@TtJ@`BCh@KbAId@_@dAWj@s@~@m@h@u@f@}IdFwEnC{@l@eM|Js@n@_AhAi@t@]j@eO`UuAzBeA~AUn@{AlBsOfUoHhK_CpDwBlDmEnIcBnDyCrH_BjE{A|EeC|I{@zCwA`GaAnEs@zDy@|EqAtG{F|[}BzLe@|CY`DKzC@xENlGXrEl@hGfF`f@N|CBjDCtAShDYjC_@vBsXncAsAnDm@vA_BjCuAnB{BdCmDxCeBjAqa@lUcWnNw[tQqGjDyLdHsVfNUNyQhKkJfFkObJoAv@ER}C|B_HhFiEpDeB|AsBbBg@\_FrEWJyArAg@n@cFhEwAdA{@|@aCdBgC|BuCpBaA`AcDhCqJbHUR|@~A`ApAnDvFEd@d@v@mA`AjBzCy@n@_@o@'
+      operationId: compute-route
+      description: "Communicates with Google Routes API and fetches the encoded polyline for in-app navigation.\r\n[https://routes.googleapis.com/directions/v2:computeRoutes]\r\nVehicle Types:\r\n- Motorcycle\r\n- Car\r\n- Van"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - origin
+                - destination
+              properties:
+                origin:
+                  type: object
+                  x-stoplight:
+                    id: cc7piwcidm57n
+                  required:
+                    - latitude
+                    - longitude
+                  properties:
+                    latitude:
+                      type: number
+                      x-stoplight:
+                        id: b4ex13mhj4m0i
+                    longitude:
+                      type: number
+                      x-stoplight:
+                        id: rvu59vutv12h9
+                destination:
+                  type: object
+                  x-stoplight:
+                    id: gsrvx3085pizj
+                  required:
+                    - latitude
+                    - longitude
+                  properties:
+                    latitude:
+                      type: number
+                      x-stoplight:
+                        id: h1e3kr7js0728
+                    longitude:
+                      type: number
+                      x-stoplight:
+                        id: 0g01g3h0562le
+                vehicleTypeId:
+                  type: integer
+                  x-stoplight:
+                    id: s0ppj7y268b76
+                  description: Motorcycle - Car - Van
+                  nullable: true
+            examples:
+              Example 1:
+                value:
+                  origin:
+                    latitude: 24.3773
+                    longitude: 54.7337
+                  destination:
+                    latitude: 24.9093
+                    longitude: 53.1172
+                  vehicleTypeId: 0
+  /api/driver/auth/device-id:
+    post:
+      summary: Device ID
+      tags: []
+      responses:
+        2XX:
+          description: Success
+        4XX:
+          description: Client Error
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example 1:
+                  value:
+                    code: 400
+                    message: Initiation failed
+                    data: null
+      operationId: device-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - deviceId
+              properties:
+                deviceId:
+                  type: string
+                  x-stoplight:
+                    id: f8ymtdweqrjvd
+            examples:
+              Example 1:
+                value:
+                  deviceId: 30a57a468927be05
+      security: []
+  /api/driver/auth/profile/update-phone:
+    put:
+      summary: Update Phone
+      tags: []
+      responses:
+        2XX:
+          description: Success
+      operationId: update-phone
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone
+              properties:
+                phone:
+                  type: string
+                  x-stoplight:
+                    id: 7yurinrae8br1
+            examples:
+              Example 1:
+                value:
+                  phone: '971565847956'
+components:
+  schemas:
+    UserProfile:
+      type: object
+      x-examples:
+        Example 1:
+          id: 22
+          name: John Doe
+          email: mobile.developer@oasislivestock.com
+          phone: '971562058974'
+          imageUrl: 'https://xyc.com/image.png'
+          isPhoneVerified: true
+          isTermsAccepted: true
+          isDocumentsApproved: true
+          isExpressDeliveryActive: false
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+      required:
+        - id
+        - name
+        - email
+        - phone
+        - imageUrl
+        - isPhoneVerified
+        - isTermsAccepted
+        - isDocumentsApproved
+        - isExpressDeliveryActive
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        imageUrl:
+          type: string
+        isPhoneVerified:
+          type: boolean
+        isTermsAccepted:
+          type: boolean
+        isDocumentsApproved:
+          type: boolean
+        isExpressDeliveryActive:
+          type: boolean
+        token:
+          type: string
+    Terms-Condition-and-Privacy-Policy:
+      type: array
+      x-examples:
+        Example 1:
+          - id: 63
+            title: Data Collection
+            body: 'We collect only necessary information such as name, contact details, and delivery addresses to provide our services.'
+      items:
+        type: object
+        required:
+          - id
+          - title
+          - body
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          body:
+            type: string
+    Countries:
+      title: Countries
+      type: array
+      items:
+        $ref: '#/components/schemas/Country'
+      x-examples:
+        Example 1:
+          - id: 1
+            name: UAE
+            countryCode: '+971'
+            phoneRegex: '^(+0?1s)?(?d{3})?[s.-]d{3}[s.-]d{4}$'
+            flagUrl: 'https://cargo.cargooapp.com/uploads/image/countries/20250212T105349185Z755336.png'
+    Country:
+      type: object
+      x-examples:
+        Example 1:
+          id: 0
+          name: United Arab Emirates
+          countryCode: '+971'
+          phoneRegex: '^(+d{1,2}s?)?(?d{3})?[s.-]?d{3}[s.-]?d{4}$'
+          flagUrl: 'https://cargo.cargooapp.com/uploads/image/countries/20250212T105349185Z755336.png'
+      required:
+        - id
+        - name
+        - countryCode
+        - phoneRegex
+        - flagUrl
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        countryCode:
+          type: string
+        phoneRegex:
+          type: string
+        flagUrl:
+          type: string
+    Language:
+      type: object
+      x-examples:
+        Example 1:
+          id: 1
+          name: English
+          locale: en
+      required:
+        - id
+        - name
+        - locale
+      properties:
+        id:
+          type: integer
+          x-stoplight:
+            id: c8z29340xevkj
+        name:
+          type: string
+          x-stoplight:
+            id: 5b18zmcp7v04a
+        locale:
+          type: string
+          x-stoplight:
+            id: bzy4nd8jj4lab
+      description: ''
+    Documents:
+      x-examples:
+        Example 1:
+          - id: 103
+            name: Emirates ID Front Side
+            imageUrl: 'http://xyz.com/documents/20250424T122842819Z567824.jpg'
+            status: 1
+            rejectionReason: null
+          - id: 104
+            name: Emirates ID Back Side
+            imageUrl: 'http://xyz.com/documents/20250424T122842819Z567824.jpg'
+            status: 2
+            rejectionReason:
+              id: 96
+              title: Rejection Reason Title
+              body: 'Your emirates ID has expired, please re-upload a valid ID'
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Document:
+      type: object
+      x-examples:
+        Example 1:
+          id: 104
+          name: Emirates ID Back Side
+          imageUrl: 'http://xyz.com/documents/20250424T122842819Z567824.jpg'
+          status: 2
+          rejectionReason:
+            id: 96
+            title: Rejection Reason Title
+            body: 'Your emirates ID has expired, please re-upload a valid ID'
+      required:
+        - id
+        - name
+        - imageUrl
+        - status
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        imageUrl:
+          type: string
+        status:
+          type: integer
+        rejectionReason:
+          $ref: '#/components/schemas/Rejection'
+    Rejection:
+      type: object
+      x-examples:
+        Example 1:
+          id: 96
+          title: Rejection Reason Title
+          body: 'Your emirates ID has expired, please re-upload a valid ID'
+      nullable: true
+      required:
+        - id
+        - title
+        - body
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+      description: ''
+    Address:
+      type: object
+      x-examples:
+        Example 1:
+          id: 13
+          title: Someone's Home
+          country: UAE
+          city: Abu Dhabi
+          district: Zone 1
+          subDistrict: Al Danah
+          apartment: B-102
+          building: 'Tiger Tower #6'
+          phone: '+971568521456'
+          latitude: 24.45391234
+          longitude: 54.37731234
+      required:
+        - id
+        - title
+        - country
+        - city
+        - district
+        - subDistrict
+        - apartment
+        - building
+        - phone
+        - latitude
+        - longitude
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        subDistrict:
+          type: string
+        apartment:
+          type: string
+        building:
+          type: string
+        phone:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+    Orders:
+      type: array
+      x-examples:
+        Example 1:
+          - id: 123
+            phone: '+971562014587'
+            packageCount: 3
+            addressFrom:
+              id: 62
+              title: Home Address
+              latitude: 24.447118729922693
+              longitude: 54.38278386194854
+            addressTo:
+              id: 223
+              title: Office Address
+              latitude: 24.447118729922693
+              longitude: 54.38278386194854
+          - id: 124
+            phone: '+971562014587'
+            packageCount: 1
+            addressFrom:
+              id: 62
+              title: Home Address
+              latitude: 24.447118729922693
+              longitude: 54.38278386194854
+            addressTo:
+              id: 223
+              title: Office Address
+              latitude: 24.447118729922693
+              longitude: 54.38278386194854
+      items:
+        $ref: '#/components/schemas/Order'
+    Order:
+      type: object
+      x-examples:
+        Example 1:
+          id: 123
+          phone: '+971562014587'
+          packageCount: 3
+          addressFrom:
+            id: 62
+            title: Home Address
+            latitude: 24.447118729922693
+            longitude: 54.38278386194854
+          addressTo:
+            id: 223
+            title: Office Address
+            latitude: 24.447118729922693
+            longitude: 54.38278386194854
+      required:
+        - id
+        - phone
+        - packageCount
+        - addressFrom
+        - addressTo
+      properties:
+        id:
+          type: integer
+        phone:
+          type: string
+        packageCount:
+          type: integer
+        handoverDriverId:
+          type: integer
+          nullable: true
+        addressFrom:
+          $ref: '#/components/schemas/Address'
+        addressTo:
+          $ref: '#/components/schemas/Address'
+    Tasks:
+      x-examples:
+        Example 1:
+          - id: 3-78
+            taskType:
+              id: 1
+              name: go to location
+            status: 1
+            orderId: 132
+            numberOfOrders: 1
+            requireDeliveryConfirmation: false
+            address:
+              id: 231
+              title: Address Title
+              latitude: 24.565424
+              longitude: 54.985224
+      type: array
+      items:
+        $ref: '#/components/schemas/Task'
+    Task:
+      type: object
+      x-examples:
+        Example 1:
+          id: 3-78
+          taskType:
+            id: 1
+            name: go to location
+          status: 1
+          orderId: 132
+          numberOfOrders: 1
+          requireDeliveryConfirmation: false
+          address:
+            id: 231
+            title: Address Title
+            latitude: 24.565424
+            longitude: 54.985224
+      required:
+        - id
+        - taskTypeId
+        - status
+        - orderId
+        - numberOfOrders
+        - requireDeliveryConfirmation
+        - address
+      properties:
+        id:
+          type: string
+        taskTypeId:
+          $ref: '#/components/schemas/Task-Type'
+        status:
+          type: integer
+        orderId:
+          type: integer
+        numberOfOrders:
+          type: integer
+        requireDeliveryConfirmation:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/Address'
+    Task-Type:
+      type: object
+      x-examples:
+        Example 1:
+          id: 1
+          name: go to location
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    Notifications:
+      type: array
+      x-examples:
+        Example 1:
+          - id: 11
+            title: New order notification
+            message: Accept this order
+            notificationType: 2
+            createdAt: '2025-04-13T07:35:49.994Z'
+          - id: 12
+            title: New order notification
+            message: Accept this order
+            notificationType: 2
+            createdAt: '2025-04-13T07:35:49.994Z'
+          - id: 13
+            title: New order notification
+            message: Accept this order
+            notificationType: 2
+            createdAt: '2025-04-13T07:35:49.994Z'
+          - id: 14
+            title: New order notification
+            message: Accept this order
+            notificationType: 2
+            createdAt: '2025-04-13T07:35:49.994Z'
+      items:
+        type: object
+        required:
+          - id
+          - title
+          - message
+          - notificationType
+          - createdAt
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          message:
+            type: string
+          notificationType:
+            type: integer
+          createdAt:
+            type: string
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      x-extension-1:
+        code: 404
+        message: User not found
+        data: {}
+      x-examples:
+        Example 1:
+          code: 0
+          message: string
+          data:
+            property1: null
+            property2: null
+      required:
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+          x-stoplight:
+            id: gb5l22nz7hy8f
+        data:
+          type: object
+          x-stoplight:
+            id: 82emvk3fv1mc6
+          nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UserProfile:
+      description: User response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserProfile'
+          examples:
+            Example 1:
+              value:
+                id: 22
+                name: John Doe
+                email: mobile.developer@oasislivestock.com
+                phone: '971562058974'
+                imageUrl: 'https://xyc.com/image.png'
+                isPhoneVerified: true
+                isTermsAccepted: true
+                isDocumentsApproved: true
+                isExpressDeliveryActive: false
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+    UserNotFoundError:
+      description: User Not Found Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 406
+                message: User Not Found
+                data: {}
+    SuccessResponse:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 200
+                message: Operation successful
+                data: null
+    Bad-Request-400:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 400
+                message: Bad Request – The server could not understand the request due to invalid syntax.
+    Unauthorized-401:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 401
+                message: Unauthorized – Authentication is required and has failed or has not been provided.
+    Forbidden-403:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 403
+                message: Forbidden – The client does not have access rights to the content.
+    Not-Found-404:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 404
+                message: Not Found – The requested resource was not found on the server.
+    Conflict-409:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 409
+                message: Conflict – The request could not be completed due to a conflict with the current state of the target resource.
+    TooManyRequests-429:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 429
+                message: Too Many Requests – The user has sent too many requests in a given amount of time (rate limiting).
+    Unprocessable-Entity-422:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 422
+                message: Unprocessable Entity – The request was well-formed but contains semantic errors.
+    Internal-Server-Error-500:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 500
+                message: Internal Server Error – The server has encountered a situation it doesn't know how to handle.
+    Bad-Gateway-502:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 502
+                message: Bad Gateway – The server received an invalid response from the upstream server.
+    Service-Unavailable-503:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 503
+                message: Service Unavailable – The server is not ready to handle the request (usually due to maintenance).
+    Gateway-Timeout-504:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 504
+                message: Gateway Timeout – The server did not get a response in time from the upstream server.
+    Otp-Expired:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBody'
+          examples:
+            Example 1:
+              value:
+                code: 1001
+                message: OTP expired
+  examples:
+    UserProfile:
+      value:
+        id: 23
+        name: John Doe
+        email: mobile.developer@oasislivestock.com
+        phone: '971562058974'
+        imageUrl: 'https://xyc.com/image.png'
+        isPhoneVerified: true
+        isTermsAccepted: true
+        isDocumentsApproved: true
+        isExpressDeliveryActive: false
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  parameters:
+    Locale:
+      name: Accept-Language
+      in: header
+      required: false
+      schema:
+        type: string
+        enum:
+          - en
+          - ar
+          - ur
+          - ps
+          - fa
+        example: 'en, ar, ur, ps, fa'
+      description: en
+    Device-Id:
+      name: Device-Id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 30a75b468927ae06
+security:
+  - bearerAuth: []
